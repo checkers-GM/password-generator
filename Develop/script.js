@@ -84,6 +84,57 @@ var upperCasedCharacters = [
     'Z'
 ];
 
+function getPasswordOptions() {
+    var length = prompt("How long do you want your new password to be?");
+    if (typeof length !== 'number') {
+        alert('this is not a number');
+        return;
+    }
+    if (length < 8) {
+        alert('Your password is too short')
+        return;
+    }
+
+    if (length > 128) {
+        alert('Your password is too long it must be less than 129 characters')
+        return;
+    }
+
+    var specialCharacters = confirm(
+        "click Ok to use special characters in your password"
+    );
+
+    var upperCasedCharacters = confirm(
+        "click OK to use uppercase characters in your password"
+    );
+
+    var lowerCasedCharacters = confirm(
+        "Click OK to use lowercase characters in your password"
+    );
+
+    var numericalcharacters = confirm(
+        "click OK to use numerical characters in your password"
+    );
+
+    if (
+        specialCharacters === false &&
+        upperCasedCharacters === false &&
+        lowerCasedCharacters === false &&
+        numeriocalCharacters === false
+    ) {
+        alert("You must select at least one of the options for password characters")
+        return;
+    };
+
+    var passwordOptions = {
+        length: length,
+        specialCharacters: specialCharacters,
+        upperCasedCharacters: upperCasedCharacters,
+        lowerCasedCharacters: lowerCasedCharacters,
+        numericalcharacters: numericalcharacters
+    };
+    return passwordOptions;
+}
 
 
 // Assignment Code
