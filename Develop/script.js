@@ -88,7 +88,7 @@ function getPasswordOptions() {
     var length = parseInt(
         prompt("How long do you want your new password to be?")
     );
-    if (typeof length !== 'number') {
+    if (isNaN(length) === true) {
         alert('this is not a number');
         return;
     }
@@ -102,11 +102,11 @@ function getPasswordOptions() {
         return;
     }
 
-    var specialCharacters = confirm(
+    var haveSpecialCharacters = confirm(
         "click Ok to use special characters in your password"
     );
 
-    var upperCasedCharacters = confirm(
+    var hasUpperCasedCharacters = confirm(
         "click OK to use uppercase characters in your password"
     );
 
@@ -114,15 +114,15 @@ function getPasswordOptions() {
         "Click OK to use lowercase characters in your password"
     );
 
-    var numericalcharacters = confirm(
+    var hasNunmericalCharacters = confirm(
         "click OK to use numerical characters in your password"
     );
 
     if (
-        specialCharacters === false &&
-        upperCasedCharacters === false &&
+        haveSpecialCharacters === false &&
+        hasUpperCasedCharacters === false &&
         lowerCasedCharacters === false &&
-        numeriocalCharacters === false
+        hasNunmericalCharacters === false
     ) {
         alert("You must select at least one of the options for password characters")
         return;
@@ -130,10 +130,10 @@ function getPasswordOptions() {
 
     var passwordOptions = {
         length: length,
-        specialCharacters: specialCharacters,
-        upperCasedCharacters: upperCasedCharacters,
+        hasSpecialCharacters: hasSpecialCharacters,
+        hasUpperCasedCharacters: hasUpperCasedCharacters,
         lowerCasedCharacters: lowerCasedCharacters,
-        numericalcharacters: numericalcharacters
+        hasNunmericalCharacters: hasNunmericalCharacters
     };
     return passwordOptions;
 }
@@ -141,11 +141,11 @@ function getPasswordOptions() {
 // function to get random number for array length
 
 function getRandomElement(array) {
-    var arrayLength = array.length;
-    var randomizer = Math.random() * arrayLength;
-    var randomArrayNumber = Math.floor(randomizer);
-    var randomArrayElement = array[randomArrayNumber];
-    return randomArrayElement;
+   
+    var randIndex = Math.floor(Math.random() * array.length);
+    var randElem = array[randIndex];
+
+    return randElem;
 }
 
 function generateRandomPassword() {
@@ -176,19 +176,12 @@ function generateRandomPassword() {
         chosenCharacter.push(randomCharacter);
     }
 
+    for (var i= 0; i < neededCharacters.length; i++) {
+        chosenCharacter[i] = neededCharacters[i];
+    }
 
-
-
+    return chosenCharacter.join('');
 }
-
-
-
-
-
-
-
-
-
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
@@ -196,7 +189,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-    var password = generatePassword();
+    var password = generateRandomPassword();
     var passwordText = document.querySelector("#password");
 
     passwordText.value = password;
