@@ -88,7 +88,7 @@ function getPasswordOptions() {
     var length = parseInt(
         prompt("How long do you want your new password to be?")
     );
-    if (typeof length !== 'number') {
+    if (isNaN(length) === true) {
         alert('this is not a number');
         return;
     }
@@ -102,27 +102,27 @@ function getPasswordOptions() {
         return;
     }
 
-    var specialCharacters = confirm(
+    var hasSpecialCharacters = confirm(
         "click Ok to use special characters in your password"
     );
 
-    var upperCasedCharacters = confirm(
+    var hasUpperCasedCharacters = confirm(
         "click OK to use uppercase characters in your password"
     );
 
-    var lowerCasedCharacters = confirm(
+    var hasLowerCasedCharacters = confirm(
         "Click OK to use lowercase characters in your password"
     );
 
-    var numericalcharacters = confirm(
+    var hasNumericalCharacters = confirm(
         "click OK to use numerical characters in your password"
     );
 
     if (
-        specialCharacters === false &&
-        upperCasedCharacters === false &&
-        lowerCasedCharacters === false &&
-        numeriocalCharacters === false
+        hasSpecialCharacters === false &&
+        hasUpperCasedCharacters === false &&
+        hasLowerCasedCharacters === false &&
+        hasNumericalCharacters === false
     ) {
         alert("You must select at least one of the options for password characters")
         return;
@@ -130,10 +130,10 @@ function getPasswordOptions() {
 
     var passwordOptions = {
         length: length,
-        specialCharacters: specialCharacters,
-        upperCasedCharacters: upperCasedCharacters,
-        lowerCasedCharacters: lowerCasedCharacters,
-        numericalcharacters: numericalcharacters
+        hasSpecialCharacters: hasSpecialCharacters,
+        hasUpperCasedCharacters: hasUpperCasedCharacters,
+        hasLowerCasedCharacters: hasLowerCasedCharacters,
+        hasNumericalCharacters: hasNumericalCharacters
     };
     return passwordOptions;
 }
@@ -152,13 +152,13 @@ function generateRandomPassword() {
     var optionsForPassword = getPasswordOptions();
     var possibleCharacters = [];
     var neededCharacters = [];
-    var chosenCharacter = [];
+    var chosenCharacters = [];
 
-    if (optionsForPassword.numericalcharacters) {
+    if (optionsForPassword.hasNumericalCharacters) {
         possibleCharacters = possibleCharacters.concat(numericCharacters);
         neededCharacters.push(getRandomElement(numericCharacters));
     }
-    if (optionsForPassword.lowerCasedCharacters) {
+    if (optionsForPassword.hasLowerCasedCharacters) {
         possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
         neededCharacters.push(getRandomElement(lowerCasedCharacters));
     }
@@ -173,22 +173,15 @@ function generateRandomPassword() {
 
     for (var i = 0; i < optionsForPassword.length; i++) {
         var randomCharacter = getRandomElement(possibleCharacters);
-        chosenCharacter.push(randomCharacter);
+        chosenCharacters.push(randomCharacter);
     }
 
+    for (var i = 0; i < neededCharacters.length; i++) {
+        chosenCharacters[i] = neededCharacters[i];
+    }
 
-
-
+    return chosenCharacters.join('');
 }
-
-
-
-
-
-
-
-
-
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
@@ -196,7 +189,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-    var password = generatePassword();
+    var password = generateRandomPassword();
     var passwordText = document.querySelector("#password");
 
     passwordText.value = password;
