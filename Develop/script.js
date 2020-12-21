@@ -85,7 +85,9 @@ var upperCasedCharacters = [
 ];
 
 function getPasswordOptions() {
-    var length = prompt("How long do you want your new password to be?");
+    var length = parseInt(
+        prompt("How long do you want your new password to be?")
+    );
     if (typeof length !== 'number') {
         alert('this is not a number');
         return;
@@ -135,6 +137,57 @@ function getPasswordOptions() {
     };
     return passwordOptions;
 }
+
+// function to get random number for array length
+
+function getRandomElement(array) {
+    var arrayLength = array.length;
+    var randomizer = Math.random() * arrayLength;
+    var randomArrayNumber = Math.floor(randomizer);
+    var randomArrayElement = array[randomArrayNumber];
+    return randomArrayElement;
+}
+
+function generateRandomPassword() {
+    var optionsForPassword = getPasswordOptions();
+    var possibleCharacters = [];
+    var neededCharacters = [];
+    var chosenCharacter = [];
+
+    if (optionsForPassword.numericalcharacters) {
+        possibleCharacters = possibleCharacters.concat(numericCharacters);
+        neededCharacters.push(getRandomElement(numericCharacters));
+    }
+    if (optionsForPassword.lowerCasedCharacters) {
+        possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
+        neededCharacters.push(getRandomElement(lowerCasedCharacters));
+    }
+    if (optionsForPassword.upperCasedCharacters) {
+        possibleCharacters = possibleCharacters.concat(upperCasedCharacters);
+        neededCharacters.push(getRandomElement(upperCasedCharacters));
+    }
+    if (optionsForPassword.specialCharacters) {
+        possibleCharacters = possibleCharacters.concat(specialCharacters);
+        neededCharacters.push(getRandomElement(specialCharacters));
+    }
+
+    for (var i = 0; i < optionsForPassword.length; i++) {
+        var randomCharacter = getRandomElement(possibleCharacters);
+        chosenCharacter.push(randomCharacter);
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
 
 
 // Assignment Code
